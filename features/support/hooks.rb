@@ -13,6 +13,13 @@ unless browser == :none
     if machine == :local
         capabilities = Selenium::WebDriver.for :firefox, driver_path: geckodriver_path if browser == :firefox
         capabilities = Webdriver::UserAgent.driver(:browser => browser, :agent => :iphone, :orientation => :portrait, :driver_path => chromedriver_path) if mobile == :true
+        if mac == :true && mobile == :false
+            options = Selenium::WebDriver::Chrome::Options.new
+            options.add_argument('--ignore-certificate-errors')
+            options.add_argument('--disable-popup-blocking')
+            options.add_argument('--disable-translate')
+            capabilities = Selenium::WebDriver.for :chrome, options: options, driver_path: chromedriver_path
+        end
         capabilities ||= Selenium::WebDriver.for :chrome, switches: [arguments], driver_path: chromedriver_path
     else
         capabilities = Selenium::WebDriver::Remote::Capabilities.firefox :profile => 'default', driver_path: geckodriver_path if browser == :firefox
@@ -36,7 +43,6 @@ Before do |scenario|
         unless browser == :none
             @browser = browser
             @browser.cookies.clear
-            # @browser.driver.manage.window.maximize if mobile == :true
         end
     rescue
         retry unless (tries -= 1).zero?

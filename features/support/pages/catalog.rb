@@ -41,10 +41,10 @@ class CatalogPage
 
     def get_total_number_of_matches
         if mobile == :true
-            self.results_mobile_element.wait_until_present(timeout:10)
+            self.results_mobile_element.wait_until_present(timeout:30)
             return (get_number(self.results_mobile)).to_i
         else
-            self.results_desktop_element.wait_until_present(timeout:10)
+            self.results_desktop_element.wait_until_present(timeout:30)
             return (get_number(self.results_desktop)).to_i
         end
     end
@@ -58,7 +58,7 @@ class CatalogPage
         min_price = get_number(min_price)
         max_price = get_number(max_price)
         loop do
-            self.breadcrumb_element.wait_until_present(timeout:10)
+            self.breadcrumb_element.wait_until_present(timeout:30)
             breadcrumb_text = self.breadcrumb_element.text
             break if breadcrumb_text.include?(min_price) && breadcrumb_text.include?(max_price)
         end
