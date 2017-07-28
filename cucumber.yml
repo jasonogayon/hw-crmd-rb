@@ -1,0 +1,3 @@
+default: FIG_NEWTON_FILE=production.yml --no-source --color --format pretty -t ~@not_ready
+staging: FIG_NEWTON_FILE=staging.yml --no-source --color --format pretty -t ~@not_ready
+production: FIG_NEWTON_FILE=production.yml --no-source --color --format pretty -t ~@not_ready
