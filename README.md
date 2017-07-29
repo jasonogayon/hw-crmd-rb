@@ -38,11 +38,11 @@ Existing Tags in the test suite:
 
 ## Test Reporting
 
-Each run of the test suite automatically generates a HTML test report, found inside the `reports` directory with a file name of test_report.html. To modify the file name and location where a test report is saved, one can either modify the settings in the cucumber.yml file or manually set the file name and location at runtime.
+Each run of the test suite automatically generates a HTML test report, found inside the `reports` directory with a file name of `test_report.html`. To modify the file name and location where a test report is saved, one can either modify the settings in the `cucumber.yml` file or manually set the file name and location at runtime.
 
-A screenshot of a test report (click to view actual sample report):
+A screenshot of a sample test report (file under `reports` directory):
 
-[ ![carmudiReport](screenshots/watir-carmudi-cucumber-sample-report.png) ](reports/test_report.html)
+![carmudiReport](screenshots/watir-carmudi-cucumber-sample-report.png)
 
 ## Maintenance
 
