@@ -20,7 +20,8 @@ Note: Screenshots above shows tests running on Firefox 54.0.1 on a macOS Sierra 
 ## Running Sample Tests
 
 To run the sample test suite:
-`cucumber [desired_tags] [MOBILE=true/false] [WINDOWS=true/false]`
+
+`cucumber [desired_tags] [MOBILE=true/false] [WINDOWS=true/false] [BROWSER=firefox/chrome]`
 
 For example:
 

@@ -20,7 +20,7 @@ require 'json'
 World(PageObject::PageFactory)
 
 def browser
-    (ENV['BROWSER'] ||= 'chrome').downcase.to_sym
+    (ENV['BROWSER'] ||= 'firefox').downcase.to_sym
 end
 
 def machine
@@ -31,6 +31,6 @@ def mobile
     (ENV['MOBILE'] ||= 'false').downcase.to_sym
 end
 
-def mac
-    (ENV['MAC'] ||= 'false').downcase.to_sym
+def windows
+    (ENV['WINDOWS'] ||= 'false').downcase.to_sym
 end
