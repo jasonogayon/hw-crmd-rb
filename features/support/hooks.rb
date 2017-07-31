@@ -15,13 +15,32 @@ unless browser == :none
         capabilities = Webdriver::UserAgent.driver(browser: browser, driver_path: driver_path)
     else
         if browser == :firefox
-            capabilities = Selenium::WebDriver.for :firefox, driver_path: driver_path
+            begin
+                tries ||= 1
+                capabilities = Selenium::WebDriver.for :firefox, driver_path: driver_path
+            rescue Selenium::WebDriver::Error::WebDriverError
+                puts "You seem to be running the test suite on a Windows machine without setting the WINDOWS=true option in the terminal"
+                puts "Automatically selecting the proper browser driver ..."
+                driver_path = File.join(BROWSERS_DIRECTORY, "browsers", "geckodriver.exe")
+                capabilities = Selenium::WebDriver.for :firefox, driver_path: driver_path
+                retry unless (tries -= 1).zero?
+            end
         else
-            options = Selenium::WebDriver::Chrome::Options.new
-            options.add_argument('--ignore-certificate-errors')
-            options.add_argument('--disable-popup-blocking')
-            options.add_argument('--disable-translate')
-            capabilities = Selenium::WebDriver.for :chrome, options: options, driver_path: driver_path
+            begin
+                tries ||= 1
+                options = Selenium::WebDriver::Chrome::Options.new
+                options.add_argument('--ignore-certificate-errors')
+                options.add_argument('--disable-popup-blocking')
+                options.add_argument('--disable-translate')
+                options.add_argument('--start-maximized')
+                capabilities = Selenium::WebDriver.for :chrome, options: options, driver_path: driver_path
+            rescue Selenium::WebDriver::Error::WebDriverError
+                puts "You seem to be running the test suite on a Windows machine without setting the WINDOWS=true option in the terminal"
+                puts "Automatically selecting the proper browser driver ..."
+                driver_path = File.join(BROWSERS_DIRECTORY, "browsers", "chromedriver.exe")
+                capabilities = Selenium::WebDriver.for :chrome, options: options, driver_path: driver_path
+                retry unless (tries -= 1).zero?
+            end
         end
     end
     browser = Watir::Browser.new capabilities

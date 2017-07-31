@@ -44,8 +44,8 @@ class CatalogPage
         self.price_filter_element.wait_until_present(timeout:30)
         self.price_filter_element.focus
         self.price_filter_element.click
-        self.min_price = get_value(min_price) unless min_price.nil?
-        self.max_price = get_value(max_price) unless max_price.nil?
+        self.min_price = @@min_price unless min_price.nil?
+        self.max_price = @@max_price unless max_price.nil?
         @browser.execute_script("window.scrollTo(0,0)")
         mobile == :true ? self.refresh_filters : self.apply_filters
     end
@@ -76,12 +76,15 @@ class CatalogPage
     def get_filtered_catalog_item_prices
         item_prices = Array.new
         loop do
-            if mobile == :true
-                self.first_item_price_mobile_element.wait_while_present(timeout:60)
-                self.first_item_price_mobile_element.wait_until_present(timeout:60)
-            else
-                self.first_item_price_desktop_element.wait_while_present(timeout:60)
-                self.first_item_price_desktop_element.wait_until_present(timeout:60)
+            begin
+                if mobile == :true
+                    self.first_item_price_mobile_element.wait_while_present(timeout:60)
+                    self.first_item_price_mobile_element.wait_until_present(timeout:60)
+                else
+                    self.first_item_price_desktop_element.wait_while_present(timeout:60)
+                    self.first_item_price_desktop_element.wait_until_present(timeout:60)
+                end
+            rescue
             end
             no_items_on_page = self.catalog_list_elements.size
             (1..no_items_on_page).each do |i|
